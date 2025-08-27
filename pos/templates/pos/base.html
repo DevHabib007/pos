@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Django POS</title>
+  <link rel="stylesheet" href="{% static 'pos/styles.css' %}">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-wrapper">
+    <a href="{% url 'index' %}">Dashboard</a>
+    <a href="{% url 'product_list' %}">Products</a>
+    <a href="{% url 'customer_list' %}">Customers</a>
+    <a href="{% url 'sale_list' %}">Sales</a>
+    <a href="{% url 'report_sales' %}">Reports</a>
+    <a href="{% url 'sale_create' %}" class="btn">New Sale</a>
+    <div class="nav-user">
+      {% if user.is_authenticated %}
+        <span>Hi, {{ user.username }}</span>
+        <a href="{% url 'admin:logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'admin:login' %}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<main class="container">
+  {% for message in messages %}
+    <div class="alert">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>
